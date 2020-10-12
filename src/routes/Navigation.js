@@ -12,6 +12,7 @@ const Navigation = () => {
   return (
     <Router>
       <Suspense fallback={<span>Loading...</span>}>
+        {/*
         <ul>
           <li>
             <NavLink exact to="/" activeClassName="active-link">
@@ -34,6 +35,7 @@ const Navigation = () => {
             </NavLink>
           </li>
         </ul>
+  */}
 
         <Switch>
           {map(routes, (route, index) => (
@@ -41,7 +43,11 @@ const Navigation = () => {
               key={index}
               path={route.path}
               exact={route.exact}
-              render={props => <route.component {...props} />}
+              render={props => (
+                <route.layout>
+                  <route.component {...props} />
+                </route.layout>
+              )}
             />
           ))}
         </Switch>

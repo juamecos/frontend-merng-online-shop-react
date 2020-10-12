@@ -1,6 +1,8 @@
 import { lazy } from "react";
-// layouts
 
+// layouts
+import LayoutAdmin from "../Layouts/LayoutAdmin/LayoutAdmin";
+import LayoutPublic from "../Layouts/LayoutPublic/LayoutPublic";
 // Pages
 
 const Home = lazy(() => import("../pages/public/Home"));
@@ -13,20 +15,24 @@ const routes = [
   {
     path: "/",
     component: Home,
+    layout: LayoutPublic,
     exact: true,
   },
   {
     path: "/contact",
     component: Contact,
+    layout: LayoutPublic,
     exact: true,
   },
   {
     path: "/admin",
+    layout: LayoutAdmin,
     component: Dashboard,
     exact: true,
   },
   {
     path: "/admin/users",
+    layout: LayoutAdmin,
     component: Users,
     exact: true,
   },
