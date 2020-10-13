@@ -1,10 +1,16 @@
 import React from "react";
 import "./LayoutPublic.scss";
+import Header from "./Header";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-const LayoutPublic = () => {
+const LayoutPublic = ({ children }) => {
   return (
-    <div>
-      <h1>Layout public</h1>
+    <div className="layout-public">
+      <Header />
+      <Navbar />
+      <main className="main container">{children}</main>
+      <Footer />
     </div>
   );
 };

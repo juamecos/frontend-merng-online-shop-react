@@ -39,7 +39,7 @@ const Header = ({ toggleSidebar }) => {
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
-              href="#"
+              href="/"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
@@ -52,14 +52,14 @@ const Header = ({ toggleSidebar }) => {
               className="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdown"
             >
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="/">
                 Action
               </a>
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="/">
                 Another action
               </a>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="/" rel>
                 Something else here
               </a>
             </div>

@@ -1,0 +1,32 @@
+@import "../../../scss/index.scss";
+.public-footer {
+  display: block;
+  flex-shrink: 0;
+  background-color: #6c757d;
+  padding: 4rem 0;
+  color: #fff;
+
+  & li {
+    &:not(:last-child) {
+      margin-right: 50px;
+    }
+
+    & a {
+      color: #fff !important;
+    }
+  }
+
+  & address p a.nav-link {
+    color: white;
+
+    &:hover,
+    &:focus {
+      color: rgba($color: #fff, $alpha: 0.8);
+    }
+  }
+
+  & svg {
+    font-size: 3.2rem;
+    fill: #2b2f33;
+  }
+}
