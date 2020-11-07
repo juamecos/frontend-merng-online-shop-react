@@ -12,14 +12,14 @@ const Sidebar = ({ showSidebar }) => {
             <Link
               to="/admin"
               className="list-group-item list-group-item-action bg-light"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               {icons.dashboard} Dashboard
             </Link>
             <Link
               to="/admin/users"
               className="list-group-item list-group-item-action bg-light"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               {icons.users} Users
             </Link>

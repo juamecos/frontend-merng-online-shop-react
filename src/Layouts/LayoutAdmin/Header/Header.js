@@ -59,7 +59,7 @@ const Header = ({ toggleSidebar }) => {
                 Another action
               </a>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="/" rel>
+              <a className="dropdown-item" href="/">
                 Something else here
               </a>
             </div>
