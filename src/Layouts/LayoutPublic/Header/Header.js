@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div class="public-header container-fluid bg-dark navbar-dark">
+    <div className="public-header container-fluid bg-dark navbar-dark">
       <div className="d-flex justify-content-between align-items-center">
         <div>
           <img className="logotype" src={Logo} alt="Logo Gamezonia" />

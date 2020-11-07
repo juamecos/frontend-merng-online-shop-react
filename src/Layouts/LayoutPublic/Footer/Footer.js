@@ -13,7 +13,7 @@ const Footer = () => {
           Downhill street, 7 - Brno (Czechia) <br />
           tlf: 00420 123456789 / 00420 987654321 - Contact:
           juanjose@menacosta.website <br />
-          <Link to="/contact" class="nav-link" alt="Link to contact">
+          <Link to="/contact" className="nav-link" alt="Link to contact">
             Contact us
           </Link>
         </p>
