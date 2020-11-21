@@ -1,6 +1,11 @@
 import React from "react";
+import { useEffect } from "react";
+import { getUsers } from "../../../services/user.service";
 
 const Home = () => {
+  useEffect(() => {
+    getUsers(2, 1).subscribe(console.log);
+  }, []);
   return (
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quod

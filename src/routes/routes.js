@@ -12,6 +12,7 @@ const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
 const Dashboard = lazy(() => import("../pages/admin/Dashboard"));
 const Users = lazy(() => import("../pages/admin/Users"));
+const Genres = lazy(() => import("../pages/admin/Genres"));
 const NoFoundPage = lazy(() => import("../pages/NoFoundPage"));
 
 const { ADMIN, CLIENT, VIEWER } = roles;
@@ -56,6 +57,13 @@ const routes = [
     path: "/admin/users",
     layout: LayoutAdmin,
     component: Users,
+    allowedRoles: [ADMIN],
+    exact: true,
+  },
+  {
+    path: "/admin/genres",
+    layout: LayoutAdmin,
+    component: Genres,
     allowedRoles: [ADMIN],
     exact: true,
   },

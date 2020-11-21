@@ -23,6 +23,13 @@ const Sidebar = ({ showSidebar }) => {
             >
               {icons.users} Users
             </Link>
+            <Link
+              to="/admin/genres"
+              className="list-group-item list-group-item-action bg-light"
+              activeclassname="selected"
+            >
+              {icons.genres} Genres
+            </Link>
           </div>
         </div>
       )}
