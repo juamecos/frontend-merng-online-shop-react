@@ -1,116 +1,146 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-
+import React, { useState, useEffect } from "react";
+import Dropdown from "../Dropdown/Dropdown";
+import Pagination from "../Pagination/Pagination";
+import TableButtons from "./TableButtons";
+import icons from "../../assets/icons";
+import "./Table.scss";
 import { getCollectionData } from "../../services/table.service";
 
-import "./Table.scss";
-
-const Table = ({ query, keyfield, columns, definitionKey, listKey }) => {
-  const [dataCollection, setDataCollection] = useState([]);
-  const [variables, setVariables] = useState({
-    include: false,
-    page: 1,
-    itemsPage: 10,
-    pages: 2,
-    total: 19,
+const Table = ({
+  itemsPage,
+  context,
+  include,
+  query,
+  columns,
+  definitionKey,
+  listKey,
+  eventEmitter$,
+  manageAction,
+}) => {
+  const [items, setItems] = useState([]);
+  const [infoPage, setInfoPage] = useState({
+    include,
+    itemsPage,
   });
 
-  const { itemsPage, page, total } = variables;
-  const getUserData = async () => {
-    try {
-      const usersResult$ = getCollectionData(query, variables, {}).subscribe(
-        result => {
-          const data = result[definitionKey];
-          console.log(data);
-          setVariables({
-            ...variables,
-            page: data.info.page,
-            itemsPage: data.info.itemsPage,
-            pages: data.info.pages,
-            total: data.info.total,
-          });
-          setDataCollection(data[listKey]);
-        }
-      );
+  // const { page, itemsPage, pages, total } = infoPage;
 
-      if (!usersResult$) {
-        console.log("There is not data");
-      }
+  const variables = {
+    include: false,
+    page: infoPage.page,
+    itemsPage: infoPage.itemsPage,
+  };
+  const loadData = async () => {
+    try {
+      const data$ = await getCollectionData(query, variables, context);
+      data$
+        .map(result => {
+          if (!result.loading) {
+            const data = result[definitionKey];
+            const { page, itemsPage, pages, total } = data.info;
+            setInfoPage({
+              ...infoPage,
+              page,
+              itemsPage,
+              pages,
+              total,
+            });
+            setItems(data[listKey]);
+          }
+        })
+        .subscribe();
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (query === undefined) {
-    throw new Error("Query is undefined, please add a query");
-  }
-  if (dataCollection === undefined) {
-    throw new Error("dataCollectiona is undefined, please add a query");
-  }
-  if (columns === undefined) {
-    throw new Error("Columns is undefined, please add a query");
-  }
-  const fetchData = () => {
-    getUserData();
-  };
   useEffect(() => {
-    fetchData();
-    return () => {};
+    if (query === undefined) {
+      throw new Error("Query is undefined, please add a query");
+    }
+
+    if (columns === undefined) {
+      throw new Error("Columns is undefined, please add a query");
+    }
+
+    loadData();
   }, []);
 
   useEffect(() => {
-    fetchData();
-    return () => {};
-  }, [page, itemsPage]);
+    loadData();
+  }, [infoPage.page, infoPage.itemsPage]);
 
-  const onPageChange = (page, sizePerPage) => {
-    setVariables({
-      ...variables,
-      itemsPage: sizePerPage,
-      page: page,
+  const onItemsPageChange = async itemsPage => {
+    setInfoPage({
+      ...infoPage,
+      pages: Math.ceil(infoPage.total / itemsPage),
+      itemsPage,
     });
   };
 
-  const onSizePerPageChange = (sizePerPage, page) => {
-    setVariables({
-      ...variables,
-      itemsPage: sizePerPage,
-      page: page,
+  const onPageChange = page => {
+    console.log(page);
+    setInfoPage({
+      ...infoPage,
+      page,
     });
   };
-
-  const sizePerPageList = [10, 15, 20];
-  const onHideSizePerPage = variables.total < sizePerPageList[0];
-  const onHidePageListOnlyOnePage = variables.pages === 1;
 
   return (
     <div>
-      <BootstrapTable
-        remote={{
-          filter: false,
-          pagination: true,
-          sort: false,
-          cellEdit: false,
+      <button
+        type="button"
+        id="add-item"
+        class="btn btn-success float-right mb-3 mr-3 align-content-center"
+        onClick={async () => {
+          await eventEmitter$.next(manageAction("add"));
         }}
-        keyField={keyfield}
-        data={dataCollection}
-        columns={columns}
-        pagination={paginationFactory({
-          page: page,
-          currSizePerPage: itemsPage,
-          totalSize: total,
-          showTotal: true,
-          sizePerPageList: sizePerPageList,
-          paginationSize: variables.pages,
-          onPageChange: onPageChange,
-          onSizePerPageChange: onSizePerPageChange,
-          hideSizePerPage: onHideSizePerPage,
-          hidePageListOnlyOnePage: onHidePageListOnlyOnePage,
-        })}
+      >
+        {icons.add}&nbsp; Add
+      </button>
+      <div className="table-responsive">
+        <table class="table table-striped table-dark ">
+          <thead>
+            <tr>
+              {columns.map(column => (
+                <th scope="col">{column.text}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {items &&
+              items.map((row, index) => (
+                <tr key={row.name}>
+                  <td>{row.id}</td>
+                  <td>{row.name}</td>
+                  <td>{row.slug}</td>
+                  <td className="table-buttons">
+                    <TableButtons
+                      dataRow={row}
+                      eventEmitter$={eventEmitter$}
+                      manageAction={manageAction}
+                    />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Dropdown
+        pages={infoPage.pages}
+        page={infoPage.page}
+        itemsPage={infoPage.itemsPage}
+        total={infoPage.total}
+        onItemsPageChange={onItemsPageChange}
+      />
+
+      <Pagination
+        pages={infoPage.pages}
+        page={infoPage.page}
+        itemsPage={infoPage.itemsPage}
+        total={infoPage.total}
+        onPageChange={onPageChange}
       />
     </div>
   );

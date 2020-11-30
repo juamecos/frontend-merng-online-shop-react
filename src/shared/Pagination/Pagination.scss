@@ -1,0 +1,11 @@
+@import "../../scss/index.scss";
+
+.pagination {
+  display: flex;
+}
+
+.selected,
+.selected:hover {
+  background-color: #69affa;
+  color: white;
+}

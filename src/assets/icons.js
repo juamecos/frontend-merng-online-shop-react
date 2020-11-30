@@ -7,6 +7,10 @@ import {
   FaUserAlt,
   FaYoutube,
   FaHighlighter,
+  FaPlusCircle,
+  FaEdit,
+  FaInfoCircle,
+  FaLock,
 } from "react-icons/fa";
 export default {
   hamburguer: <FaBars />,
@@ -16,4 +20,8 @@ export default {
   facebook: <FaFacebook />,
   twitter: <FaTwitter />,
   youtube: <FaYoutube />,
+  add: <FaPlusCircle />,
+  edit: <FaEdit />,
+  info: <FaInfoCircle />,
+  block: <FaLock />,
 };

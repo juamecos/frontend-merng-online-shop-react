@@ -1,5 +1,10 @@
 @import "../../scss/index.scss";
 
+.table-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
 ul.dropdown-menu.show {
   top: -8rem !important;
 }

@@ -1,28 +1,40 @@
-import { ApolloClient, ObservableQuery } from "@apollo/client";
 import client from "../config/apollo";
-import { map } from "rxjs/operators";
+import { GENRE_LIST_QUERY } from "./query/genre";
 import Observable from "zen-observable";
+// import { from } from "rxjs";
+// import { map } from "rxjs/operators";
 
-import { RESULT_INFO_FRAGMENT } from "./fragment/result-info";
-// workarround with zen-observable https://github.com/apollographql/apollo-client/issues/6144
-const get = (query, variables = {}, context = {}) => {
-  return Observable.from(
+const get = async (query, variables = {}, context = {}) => {
+  return new Observable.from(
     client.watchQuery({
       query,
       variables,
-      fetchPolicy: "network-only",
+      fetchPolicy: "cache-first",
       context,
     })
-  ).map(result => result.data);
+  ).map(result => {
+    return result.data;
+  });
 };
 
-const set = (mutation, variables = {}, context = {}) => {
-  client.mutate({
-    mutation,
-    variables,
-    fetchPolicy: "network-only",
-    context,
-  });
+const set = async (
+  mutation,
+  variables = {},
+  context = {},
+  query = GENRE_LIST_QUERY,
+  keyfield = "genres",
+  operation = "addGenre"
+) => {
+  try {
+    const result = await client.mutate({
+      mutation,
+      variables,
+      context,
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export { get, set };
