@@ -1,15 +1,15 @@
-import React from "react";
-import { USERS_LIST_QUERY } from "../../../graphql/query/user";
-import "../../../scss/index.scss";
-import Table from "../../../shared/table";
-import TableButtons from "../../../shared/table/TableButtons";
-import { eventEmitter$, manageAction } from "../../../services/table.service";
-import { ADD_GENRE } from "../../../graphql/mutation/genre";
+import React from "react"
+import { USERS_LIST_QUERY } from "../../../graphql/query/user"
+import "../../../scss/index.scss"
+import Table from "../../../shared/table"
+import TableButtons from "../../../shared/table/TableButtons"
+// import { manageAction } from "../../../services/table.service"
+import { ADD_GENRE } from "../../../graphql/mutation/genre"
 const Users = () => {
   //
-  const query = USERS_LIST_QUERY;
+  const query = USERS_LIST_QUERY
   // const mutation = ADD_USER;
-  const keyfield = "users";
+  const keyfield = "users"
 
   const columns = [
     { dataField: "id", text: "User Id" },
@@ -21,7 +21,7 @@ const Users = () => {
       text: "Manage Info",
       formatter: TableButtons,
     },
-  ];
+  ]
 
   return (
     <div>
@@ -31,11 +31,10 @@ const Users = () => {
         columns={columns}
         definitionKey="users"
         listKey="users"
-        eventEmitter$={eventEmitter$}
-        manageAction={manageAction}
+        // manageAction={manageAction}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users

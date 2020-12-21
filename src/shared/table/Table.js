@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Dropdown from "../Dropdown/Dropdown";
-import Pagination from "../Pagination/Pagination";
-import TableButtons from "./TableButtons";
-import icons from "../../assets/icons";
-import "./Table.scss";
-import ErrorBoundary from "../../ErrorBoundary";
-import { useQuery } from "@apollo/client";
-import { eventEmitter$ } from "../../services/table.service";
+import React, { useState, useEffect } from "react"
+import Dropdown from "../Dropdown/Dropdown"
+import Pagination from "../Pagination/Pagination"
+import TableButtons from "./TableButtons"
+import icons from "../../assets/icons"
+import "./Table.scss"
+import ErrorBoundary from "../../ErrorBoundary"
+import { useQuery } from "@apollo/client"
+import { Subject } from "rxjs"
+
+export const eventEmitter$ = new Subject()
 
 const initialInfoPage = {
   include: false,
   page: 1,
   itemsPage: 5,
-};
+}
 const Table = ({
   query,
   context,
@@ -21,10 +23,10 @@ const Table = ({
   listKey,
   manageAction,
 }) => {
-  const [items, setItems] = useState([]);
-  const [infoPage, setInfoPage] = useState(initialInfoPage);
+  const [items, setItems] = useState([])
+  const [infoPage, setInfoPage] = useState(initialInfoPage)
 
-  const { data: itemsData, loading: itemsLoading } = useQuery(
+  const { data: itemsData } = useQuery(
     query,
     {
       variables: {
@@ -33,35 +35,35 @@ const Table = ({
       },
     },
     context
-  );
+  )
 
   useEffect(() => {
     if (query === undefined) {
-      throw new Error("Query is undefined, please add a query");
+      throw new Error("Query is undefined, please add a query")
     }
     if (items === undefined) {
-      throw new Error("ResultData is undefined, please add a query");
+      throw new Error("ResultData is undefined, please add a query")
     }
 
     if (columns === undefined) {
-      throw new Error("Columns is undefined, please add a query");
+      throw new Error("Columns is undefined, please add a query")
     }
 
     if (itemsData) {
-      const data = itemsData[definitionKey];
-      const { page, itemsPage, pages, total } = data.info;
+      const data = itemsData[definitionKey]
+      const { page, itemsPage, pages, total } = data.info
       setInfoPage({
         ...infoPage,
         page,
         itemsPage,
         pages,
         total,
-      });
-      setItems(data[listKey]);
+      })
+      setItems(data[listKey])
     }
 
-    return () => {};
-  }, [itemsData]);
+    return () => {}
+  }, [itemsData])
 
   const onItemsPageChange = async itemsPage => {
     setInfoPage({
@@ -69,15 +71,15 @@ const Table = ({
       page: 1,
       pages: Math.ceil(infoPage.total / itemsPage),
       itemsPage,
-    });
-  };
+    })
+  }
 
   const onPageChange = page => {
     setInfoPage({
       ...infoPage,
       page,
-    });
-  };
+    })
+  }
 
   return (
     <div>
@@ -86,7 +88,7 @@ const Table = ({
         id="add-item"
         className="btn btn-success float-right mb-3 mr-3 align-content-center"
         onClick={async () => {
-          await eventEmitter$.next(manageAction("add"));
+          await eventEmitter$.next(manageAction("add"))
         }}
       >
         {icons.add}&nbsp; Add
@@ -136,7 +138,7 @@ const Table = ({
         onPageChange={onPageChange}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

@@ -1,7 +1,7 @@
-import React from "react";
-import Swal from "sweetalert2";
-import icons from "../../assets/icons";
-const { edit, info, block } = icons;
+import React from "react"
+import Swal from "sweetalert2"
+import icons from "../../assets/icons"
+const { edit, info, block } = icons
 export async function formBasicDialog(title, html, property) {
   return await Swal.fire({
     title,
@@ -11,17 +11,15 @@ export async function formBasicDialog(title, html, property) {
     cancelButtonText: "Cancel",
     cancelButtonColor: "#dc3545",
     preConfirm: () => {
-      const value = document.getElementById("name").value;
-      console.log("from alerts formBasicDialog", value);
+      const value = document.getElementById("name").value
+      console.log("from alerts formBasicDialog", value)
       if (value) {
-        return value;
+        return value
       }
-      Swal.showValidationMessage(
-        "You should add a genre to be able to save it"
-      );
-      return;
+      Swal.showValidationMessage("You should add a genre to be able to save it")
+      return
     },
-  });
+  })
 }
 
 export async function optionsWithDetails(
@@ -35,23 +33,24 @@ export async function optionsWithDetails(
     title,
     text: html,
     width: `${width}px`,
+    showCloseButton: true,
     showCancelButton: true,
     confirmButtonColor: "#6c757d",
     cancelButtonColor: "#dc3545",
     confirmButtonText,
     cancelButtonText,
   }).then(result => {
-    console.log(result);
-    console.log(result.dismiss);
+    console.log(result)
+    console.log(result.dismiss)
 
     if (result.value) {
-      console.log(result.value);
-      return true;
+      console.log(result.value)
+      return true
     } else if (result.dismiss.toString() === "cancel") {
-      console.log(result.dismiss);
-      return false;
+      console.log(result.dismiss)
+      return false
     }
-  });
+  })
 }
 
 // Swal.fire({

@@ -1,12 +1,11 @@
 import React from "react"
-import { eventEmitter$ } from "../../services/table.service"
+import { eventEmitter$ } from "./Table"
 import icons from "../../assets/icons"
 
 import "./Table.scss"
 
 const TableButtons = ({ dataRow, manageAction }) => {
   const { edit, info, block } = icons
-  console.log("DataRow:", dataRow)
   return (
     <>
       <button
