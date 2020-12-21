@@ -1,20 +1,23 @@
 import client from "../config/apollo";
 import { GENRE_LIST_QUERY } from "./query/genre";
 import Observable from "zen-observable";
-// import { from } from "rxjs";
-// import { map } from "rxjs/operators";
 
 const get = async (query, variables = {}, context = {}) => {
-  return new Observable.from(
-    client.watchQuery({
-      query,
-      variables,
-      fetchPolicy: "cache-first",
-      context,
-    })
-  ).map(result => {
-    return result.data;
-  });
+  try {
+    return new Observable.from(
+      client.watchQuery({
+        query,
+        variables,
+        context,
+        fetchPolicy: "cache-first",
+        nextFetchPolicy: "network-first",
+      })
+    ).map(result => {
+      return result.data;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const set = async (
@@ -30,6 +33,7 @@ const set = async (
       mutation,
       variables,
       context,
+      awaitRefetchQueries: true,
     });
     return result;
   } catch (error) {

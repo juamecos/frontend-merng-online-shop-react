@@ -1,17 +1,17 @@
-import React from "react";
-import { eventEmitter$ } from "../../services/table.service";
-import icons from "../../assets/icons";
+import React from "react"
+import { eventEmitter$ } from "../../services/table.service"
+import icons from "../../assets/icons"
 
-import "./Table.scss";
+import "./Table.scss"
 
 const TableButtons = ({ dataRow, manageAction }) => {
-  const { edit, info, block } = icons;
-
+  const { edit, info, block } = icons
+  console.log("DataRow:", dataRow)
   return (
     <>
       <button
         type="button"
-        className="btn btn-success align-middle"
+        className="btn btn-secondary align-middle"
         id="edit-item"
         onClick={() => eventEmitter$.subscribe(manageAction("edit", dataRow))}
       >
@@ -34,7 +34,7 @@ const TableButtons = ({ dataRow, manageAction }) => {
         {block}&nbsp; Block
       </button>
     </>
-  );
-};
+  )
+}
 
-export default TableButtons;
+export default TableButtons

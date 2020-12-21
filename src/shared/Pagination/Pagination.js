@@ -1,9 +1,6 @@
 import React from "react";
-import { BehaviorSubject } from "rxjs";
 
 import "./Pagination.scss";
-
-const selected$ = new BehaviorSubject(1);
 
 const Pagination = ({ pages, page, onPageChange, itemsPage }) => {
   const pageNumbers = Array.from({ length: pages }, (_, i) => i + 1);
@@ -14,7 +11,7 @@ const Pagination = ({ pages, page, onPageChange, itemsPage }) => {
 
   return pages !== 1 ? (
     <nav className="float-right" aria-label="Page navigation example">
-      <ul class="pagination">
+      <ul className="pagination">
         {/* {page === 1 ? null : <li class="page-item page-link">&laquo;</li>} */}
 
         {pageNumbers.map((number, index) => (

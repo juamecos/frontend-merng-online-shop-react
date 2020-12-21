@@ -31,7 +31,9 @@ const http = createHttpLink({
 const client = new ApolloClient({
   connectToDevTools: true,
   link: errorLink.concat(authLink).concat(http),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {},
+  }),
 });
 
 export default client;

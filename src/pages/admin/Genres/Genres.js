@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { GENRE_LIST_QUERY } from "../../../graphql/query/genre";
-import "./Genres.scss";
 import Table from "../../../shared/table";
 import TableButtons from "../../../shared/table/TableButtons";
+import "./Genres.scss";
 
-import { eventEmitter$, manageAction } from "../../../services/table.service";
-import { ADD_GENRE } from "../../../graphql/mutation/genre";
+import { manageAction } from "../../../services/table.service";
 
 const Genres = () => {
   const query = GENRE_LIST_QUERY;
-  const itemsPage = 5;
+
   const context = {};
-  const include = false;
+
   const resultData = {
     listKey: "genres",
     definitionKey: "genres",
@@ -32,15 +31,12 @@ const Genres = () => {
   return (
     <div>
       <Table
-        itemsPage={itemsPage}
         context={context}
-        include={include}
         query={query}
         keyfield={keyfield}
         columns={columns}
         definitionKey={resultData.definitionKey}
         listKey={resultData.listKey}
-        eventEmitter$={eventEmitter$}
         manageAction={manageAction}
       />
     </div>

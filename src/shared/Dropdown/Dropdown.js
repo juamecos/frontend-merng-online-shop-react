@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Dropdown.scss";
-import { subjectPageInfo$ } from "../table/Table";
+
 const Dropdown = ({ page, itemsPage, pages, total, onItemsPageChange }) => {
   const [open, setOpen] = useState(false);
 
@@ -27,9 +27,9 @@ const Dropdown = ({ page, itemsPage, pages, total, onItemsPageChange }) => {
   };
   return (
     <>
-      <div class="dropup float-left">
+      <div className="dropup float-left">
         <button
-          class="btn btn-secondary dropdown-toggle"
+          className="btn btn-secondary dropdown-toggle"
           type="button"
           id="dropdownMenuButton"
           data-toggle="dropdown"
@@ -41,12 +41,13 @@ const Dropdown = ({ page, itemsPage, pages, total, onItemsPageChange }) => {
           Shows {indexOfFirstItem()} - {indexOfLastItem} of {total}
         </div>
         <div
-          class={open ? `dropdown-menu open show` : "dropdown-menu"}
+          className={open ? `dropdown-menu open show` : "dropdown-menu"}
           aria-labelledby="dropdownMenuButton"
         >
-          {itemsPageList.map(number => (
+          {itemsPageList.map((number, index) => (
             <div
-              class="dropdown-item"
+              key={index}
+              className="dropdown-item"
               onClick={() => onSelectItemsPage(number)}
             >
               {number}
