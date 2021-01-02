@@ -7,8 +7,29 @@ import "./Table.scss"
 import ErrorBoundary from "../../ErrorBoundary"
 import { useQuery } from "@apollo/client"
 import { Subject } from "rxjs"
-
+import { takeGenresAction } from "./../../pages/admin/Genres/Genres"
+import { takeUsersAction } from "../../pages/admin/Users/Users"
 export const eventEmitter$ = new Subject()
+
+// const path = window.location.pathname
+
+// const page = {
+//   genres: "/admin/genres",
+//   users: "/admin/users",
+// }
+
+// const takeAction = (action, data) => {
+//   if (path === page.genres) {
+//     console.log("is genres:", true)
+//     takeGenresAction(action, data)
+//   }
+
+//   if (path === page.users) {
+//     console.log("is users:", true)
+//     takeUsersAction(action, data)
+//   }
+// }
+// console.log(path)
 
 const initialInfoPage = {
   include: false,
@@ -21,7 +42,7 @@ const Table = ({
   columns,
   definitionKey,
   listKey,
-  manageAction,
+  takeAction,
 }) => {
   const [items, setItems] = useState([])
   const [infoPage, setInfoPage] = useState(initialInfoPage)
@@ -30,12 +51,17 @@ const Table = ({
     query,
     {
       variables: {
+        include: false,
         page: infoPage.page,
         itemsPage: infoPage.itemsPage,
       },
     },
     context
   )
+  const manageAction = (action, data) => {
+    eventEmitter$.next(takeAction(action, data))
+    eventEmitter$.complete("Completed")
+  }
 
   useEffect(() => {
     if (query === undefined) {
@@ -106,14 +132,17 @@ const Table = ({
           </thead>
           <tbody>
             {items &&
-              items.map((row, index) => (
-                <tr key={row.name}>
-                  <td>{row.id}</td>
-                  <td>{row.name}</td>
-                  <td>{row.slug}</td>
+              items.map(item => (
+                <tr key={item.name}>
+                  {columns.map(column => (
+                    <td key={column.dataField}>{item[column.dataField]}</td>
+                  ))}
                   <td className="table-buttons">
                     <ErrorBoundary>
-                      <TableButtons dataRow={row} manageAction={manageAction} />
+                      <TableButtons
+                        dataRow={item}
+                        manageAction={manageAction}
+                      />
                     </ErrorBoundary>
                   </td>
                 </tr>

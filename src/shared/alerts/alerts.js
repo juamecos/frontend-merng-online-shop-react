@@ -1,9 +1,20 @@
-import React from "react"
 import Swal from "sweetalert2"
 import icons from "../../assets/icons"
+import { EMAIL_PATTERN } from "./../../utils/regex"
 const { edit, info, block } = icons
+
+const swalWithBasicOptions = (title, html) =>
+  Swal.mixin({
+    title,
+    html,
+    focusConfirm: false,
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
+    cancelButtonColor: "#d33",
+  })
+
 export async function formBasicDialog(title, html, property) {
-  return await Swal.fire({
+  return await swalWithBasicOptions(title, html).fire({
     title,
     html,
     focusConfirm: false,
@@ -18,6 +29,42 @@ export async function formBasicDialog(title, html, property) {
       }
       Swal.showValidationMessage("You should add a genre to be able to save it")
       return
+    },
+  })
+}
+
+export async function userFormBasicDialog(title, html) {
+  return await swalWithBasicOptions(title, html).fire({
+    preConfirm: () => {
+      let error = ""
+      const name = document.getElementById("name").value
+      if (!name) {
+        error += "Name is mandatory.<br/>"
+      }
+      const lastname = document.getElementById("lastname").value
+      if (!lastname) {
+        error += "Lastname is mandatory.<br/>"
+      }
+      const email = document.getElementById("email").value
+      if (!email) {
+        error += "Email is mandatory.<br/>"
+      }
+      if (!EMAIL_PATTERN.test(email)) {
+        error += "Incorrect format email. Ex. mail@mail.com"
+      }
+      const role = document.getElementById("role").value
+      if (error !== "") {
+        Swal.showValidationMessage(error)
+        return
+      }
+
+      return {
+        name,
+        lastname,
+        email,
+        role,
+        birthday: new Date().toISOString(),
+      }
     },
   })
 }

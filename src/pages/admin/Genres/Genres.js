@@ -1,5 +1,4 @@
 import React from "react"
-import { Switch } from "react-router-dom"
 import { GENRE_LIST_QUERY } from "../../../graphql/query/genre"
 import { add, block, update } from "../../../services/genre.service"
 import {
@@ -11,11 +10,9 @@ import { TYPE_ALERT } from "../../../shared/alerts/values.config"
 import Table from "../../../shared/table"
 import TableButtons from "../../../shared/table/TableButtons"
 
-import { eventEmitter$ } from "./../../../shared/table/Table"
-
 import "./Genres.scss"
 
-const takeAction = async (action, rowData) => {
+export const takeGenresAction = async (action, rowData) => {
   // set default Value
 
   const defaultValue = rowData ? rowData.name : ""
@@ -52,10 +49,6 @@ const takeAction = async (action, rowData) => {
     default:
       break
   }
-}
-export const manageAction = (action, data) => {
-  eventEmitter$.next(takeAction(action, data))
-  eventEmitter$.complete("Completed")
 }
 
 const addForm = async html => {
@@ -121,11 +114,9 @@ const blockItem = async (rowData, result) => {
     const res = data.blockGenre
     if (res.status) {
       basicAlert(TYPE_ALERT.SUCCESS, res.message)
-
       return
     }
     basicAlert(TYPE_ALERT.WARNING, res.message)
-
     return
   }
 }
@@ -161,7 +152,7 @@ const Genres = () => {
         columns={columns}
         definitionKey={resultData.definitionKey}
         listKey={resultData.listKey}
-        manageAction={manageAction}
+        takeAction={takeGenresAction}
       />
     </div>
   )

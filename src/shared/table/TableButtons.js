@@ -12,7 +12,7 @@ const TableButtons = ({ dataRow, manageAction }) => {
         type="button"
         className="btn btn-secondary align-middle"
         id="edit-item"
-        onClick={() => eventEmitter$.subscribe(manageAction("edit", dataRow))}
+        onClick={() => eventEmitter$.next(manageAction("edit", dataRow))}
       >
         {edit}&nbsp; Edit
       </button>
