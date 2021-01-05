@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import icons from "../../../assets/icons";
-import "./Sidebar.scss";
+import React from "react"
+import { Link } from "react-router-dom"
+import icons from "../../../assets/icons"
+import "./Sidebar.scss"
 const Sidebar = ({ showSidebar }) => {
   return (
     <>
@@ -24,6 +24,13 @@ const Sidebar = ({ showSidebar }) => {
               {icons.users} Users
             </Link>
             <Link
+              to="/admin/tags"
+              className="list-group-item list-group-item-action bg-light"
+              activeclassname="selected"
+            >
+              {icons.tags} Tags
+            </Link>
+            <Link
               to="/admin/genres"
               className="list-group-item list-group-item-action bg-light"
               activeclassname="selected"
@@ -34,7 +41,7 @@ const Sidebar = ({ showSidebar }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

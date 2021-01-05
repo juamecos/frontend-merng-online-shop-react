@@ -7,29 +7,8 @@ import "./Table.scss"
 import ErrorBoundary from "../../ErrorBoundary"
 import { useQuery } from "@apollo/client"
 import { Subject } from "rxjs"
-import { takeGenresAction } from "./../../pages/admin/Genres/Genres"
-import { takeUsersAction } from "../../pages/admin/Users/Users"
+
 export const eventEmitter$ = new Subject()
-
-// const path = window.location.pathname
-
-// const page = {
-//   genres: "/admin/genres",
-//   users: "/admin/users",
-// }
-
-// const takeAction = (action, data) => {
-//   if (path === page.genres) {
-//     console.log("is genres:", true)
-//     takeGenresAction(action, data)
-//   }
-
-//   if (path === page.users) {
-//     console.log("is users:", true)
-//     takeUsersAction(action, data)
-//   }
-// }
-// console.log(path)
 
 const initialInfoPage = {
   include: false,

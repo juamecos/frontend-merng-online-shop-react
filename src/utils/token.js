@@ -22,12 +22,11 @@ export const start = () => {
     const decodedToken = decodeToken(token)
     const exp = decodedToken.exp
     const date = new Date()
-    if (date.getTime() < exp * 1000) {
+    if (date < exp * 1000) {
       const user = decodedToken.user
-
       return user
     }
-
+    removeToken()
     return null
   }
 

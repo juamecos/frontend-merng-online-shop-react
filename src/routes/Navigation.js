@@ -1,22 +1,28 @@
-import React, { Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import routes from "./routes";
-import { map } from "lodash";
-import { start } from "../utils/token";
-import { login } from "../redux/actions/authActions";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import RouteGuard from "./RouteGuard";
+import React, { Suspense } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import routes from "./routes"
+import { map } from "lodash"
+import { start } from "../utils/token"
+import { login } from "../redux/actions/authActions"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import RouteGuard from "./RouteGuard"
 
 const Navigation = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const session = start();
+    const session = start()
     if (session !== null) {
-      dispatch(login(session));
+      dispatch(login(session))
     }
-  }, [dispatch]);
+  }, [])
+  useEffect(() => {
+    const session = start()
+    if (session !== null) {
+      dispatch(login(session))
+    }
+  }, [dispatch])
 
   return (
     <Router>
@@ -39,12 +45,12 @@ const Navigation = () => {
                   </route.layout>
                 )}
               />
-            );
+            )
           })}
         </Switch>
       </Suspense>
     </Router>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation
