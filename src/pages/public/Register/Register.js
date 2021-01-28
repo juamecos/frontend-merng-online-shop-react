@@ -1,55 +1,55 @@
-import React, { useState } from "react";
-import subYears from "date-fns/subYears";
-import { format } from "date-fns";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React, { useState } from 'react';
+import subYears from 'date-fns/subYears';
+import { format } from 'date-fns';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-import "./Register.scss";
-import { useMutation } from "@apollo/client";
-import { REGISTER } from "../../../graphql/mutation/user";
-import { useEffect } from "react";
-import { basicAlert } from "../../../shared/alerts/toast";
-import { TYPE_ALERT } from "../../../shared/alerts/values.config";
-import { Redirect } from "react-router-dom";
+import './Register.scss';
+import { useMutation } from '@apollo/client';
+import { REGISTER } from '../../../graphql/mutation/user';
+import { useEffect } from 'react';
+import { basicAlert } from '../../../shared/alerts/toast';
+import { TYPE_ALERT } from '../../../shared/alerts/values.config';
+import { Redirect } from 'react-router-dom';
 
 const CURRENTDAY = new Date();
-const MINDAY = format(subYears(CURRENTDAY, 100), "yyyy-MM-dd");
-const MAXDAY = format(subYears(CURRENTDAY, 18), "yyyy-MM-dd");
+const MINDAY = format(subYears(CURRENTDAY, 100), 'yyyy-MM-dd');
+const MAXDAY = format(subYears(CURRENTDAY, 18), 'yyyy-MM-dd');
 
 const Register = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [values, setValues] = useState({
-    name: "",
-    lastname: "",
-    birthdate: "",
-    email: "",
-    password: "",
+    name: '',
+    lastname: '',
+    birthdate: '',
+    email: '',
+    password: '',
   });
 
   const [isRegistered, setIsRegistered] = useState(false);
 
   const [register, { data }] = useMutation(REGISTER, {
-    variables: { user: values },
+    variables: { user: values, include: false },
   });
   // TODO change patern in password for production
   const formik = useFormik({
     initialValues: initialValue(),
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required"),
-      lastname: Yup.string().required("Last Name is required"),
-      birthday: Yup.string().required("Birthdate is required"),
+      name: Yup.string().required('Name is required'),
+      lastname: Yup.string().required('Last Name is required'),
+      birthday: Yup.string().required('Birthdate is required'),
       email: Yup.string()
-        .email("Invalid email address")
-        .required("Email address is required")
+        .email('Invalid email address')
+        .required('Email address is required')
         .matches(
           /^[a-zA-Z0-9._-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-          "Incorrect format, it should be mail@mail.com"
+          'Incorrect format, it should be mail@mail.com'
         ),
       password: Yup.string()
-        .required("Password is required")
+        .required('Password is required')
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-          "Must haveat least 8 characters, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters"
+          'Must have at least 8 characters, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number. Can contain special characters'
         ),
     }),
     onSubmit: formData => {
@@ -73,10 +73,13 @@ const Register = () => {
         if (user !== null) {
           setIsRegistered(true);
           basicAlert(TYPE_ALERT.SUCCESS, message);
+          return;
         }
         basicAlert(TYPE_ALERT.WARNING, message);
+        return;
       }
       basicAlert(TYPE_ALERT.INFO, message);
+      return;
     }
   }, [data]);
 
@@ -104,7 +107,7 @@ const Register = () => {
                   required
                   value={name}
                   onChange={formik.handleChange}
-                  {...formik.getFieldProps("name")}
+                  {...formik.getFieldProps('name')}
                 />
                 <div className="alert-danger">
                   {formik.errors.name &&
@@ -121,7 +124,7 @@ const Register = () => {
                   required
                   value={lastname}
                   onChange={formik.handleChange}
-                  {...formik.getFieldProps("lastname")}
+                  {...formik.getFieldProps('lastname')}
                 />
                 <div className="alert-danger">
                   {formik.errors.lastname &&
@@ -140,7 +143,7 @@ const Register = () => {
                   onChange={formik.handleChange}
                   min={MINDAY}
                   max={MAXDAY}
-                  {...formik.getFieldProps("birthday")}
+                  {...formik.getFieldProps('birthday')}
                 />
                 <div className="alert-danger">
                   {formik.errors.birthday &&
@@ -158,7 +161,7 @@ const Register = () => {
                   value={email}
                   onChange={formik.handleChange}
                   pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-                  {...formik.getFieldProps("email")}
+                  {...formik.getFieldProps('email')}
                 />
                 <div className="alert-danger">
                   {formik.errors.email &&
@@ -176,7 +179,7 @@ const Register = () => {
                   value={password}
                   onChange={formik.handleChange}
                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
-                  {...formik.getFieldProps("password")}
+                  {...formik.getFieldProps('password')}
                 />
                 {/* pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" */}
                 <div className="alert-danger">
@@ -216,10 +219,10 @@ export default Register;
 
 const initialValue = () => {
   return {
-    name: "",
-    lastname: "",
-    birthday: "",
-    email: "",
-    password: "",
+    name: '',
+    lastname: '',
+    birthday: '',
+    email: '',
+    password: '',
   };
 };

@@ -9,10 +9,10 @@ hr {
   margin-bottom: 25px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='date'],
 textarea {
   width: 100%;
   padding: 12px 20px;
@@ -25,6 +25,9 @@ textarea {
 /* Set a style for all buttons */
 .signup-btn {
   background-color: #4caf50;
+  &:active {
+    background-color: #1f5010;
+  }
 }
 
 .signup-btn:disabled {

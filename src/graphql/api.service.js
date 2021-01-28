@@ -1,6 +1,5 @@
-import client from "../config/apollo"
-import { GENRE_LIST_QUERY } from "./query/genre"
-import Observable from "zen-observable"
+import client from '../config/apollo';
+import Observable from 'zen-observable';
 
 const get = async (query, variables = {}, context = {}) => {
   try {
@@ -9,16 +8,16 @@ const get = async (query, variables = {}, context = {}) => {
         query,
         variables,
         context,
-        fetchPolicy: "cache-first",
-        nextFetchPolicy: "network-first",
+        fetchPolicy: 'cache-first',
+        nextFetchPolicy: 'network-first',
       })
     ).map(result => {
-      return result.data
-    })
+      return result.data;
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const set = async (mutation, variables = {}, context = {}) => {
   try {
@@ -27,11 +26,11 @@ const set = async (mutation, variables = {}, context = {}) => {
       variables,
       context,
       awaitRefetchQueries: true,
-    })
-    return result
+    });
+    return result;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export { get, set }
+export { get, set };

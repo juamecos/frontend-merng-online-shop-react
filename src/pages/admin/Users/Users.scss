@@ -1,5 +1,14 @@
-@import "../../../scss/index.scss";
+@import '../../../scss/index.scss';
 
 .users {
   display: block;
+}
+.swal2-validation-message {
+  text-align: start;
+  justify-content: start;
+  line-height: 1.3;
+  color: #af5e5e;
+  &:before {
+    margin-right: 2rem;
+  }
 }

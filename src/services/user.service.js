@@ -1,8 +1,11 @@
-import { get, set } from "../graphql/api.service"
-import { USERS_LIST_QUERY } from "../graphql/query/user"
+import { set } from '../graphql/api.service';
 
-import { map } from "rxjs/internal/operators/map"
-import { BLOCK_USER, REGISTER, UPDATE_USER } from "../graphql/mutation/user"
+import {
+  ACTIVE_USER,
+  BLOCK_USER,
+  REGISTER,
+  UPDATE_USER,
+} from '../graphql/mutation/user';
 
 // export const getUsers = (page = 1, itemsPage = 20) => {
 //   return get(USERS_LIST_QUERY, { include: true, itemsPage, page }, {}).map(
@@ -14,8 +17,8 @@ export const register = user => {
   return set(REGISTER, {
     user,
     include: false,
-  })
-}
+  });
+};
 
 export const update = user => {
   return set(
@@ -25,8 +28,8 @@ export const update = user => {
       include: false,
     },
     {}
-  )
-}
+  );
+};
 
 export const block = id => {
   return set(
@@ -35,5 +38,23 @@ export const block = id => {
       id,
     },
     {}
-  )
-}
+  );
+};
+
+export const active = (token, birthday, password) => {
+  const user = JSON.parse(atob(token.split('.')[1])).user;
+  return set(
+    ACTIVE_USER,
+    {
+      id: user.id,
+      birthday,
+      password,
+    },
+
+    {
+      headers: {
+        Authorization: token ? `${token}` : '',
+      },
+    }
+  );
+};

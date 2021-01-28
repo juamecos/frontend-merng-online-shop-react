@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useLazyQuery } from "@apollo/client";
-import { LOGIN_QUERY } from "../../../graphql/query/user";
-import { basicAlert } from "../../../shared/alerts/toast";
-import { TYPE_ALERT } from "../../../shared/alerts/values.config";
-import { setToken, start } from "../../../utils/token";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../redux/actions/authActions";
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useLazyQuery } from '@apollo/client';
+import { LOGIN_QUERY } from '../../../graphql/query/user';
+import { basicAlert } from '../../../shared/alerts/toast';
+import { TYPE_ALERT } from '../../../shared/alerts/values.config';
+import { setToken, start } from '../../../utils/token';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../redux/actions/authActions';
 
-import "./Login.scss";
+import './Login.scss';
 
 const Login = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   // useLazyQueries
@@ -39,9 +39,9 @@ const Login = () => {
     initialValues: initialValue(),
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Invalid email address")
-        .required("Email address is required"),
-      password: Yup.string().required("Password is required"),
+        .email('Invalid email address')
+        .required('Email address is required'),
+      password: Yup.string().required('Password is required'),
     }),
     onSubmit: async formData => {
       try {
@@ -76,7 +76,7 @@ const Login = () => {
     }
   }, [dataLoginQuery]);
 
-  if (calledLoginQuery && loadingLoginQuery) console.log("loading ...");
+  if (calledLoginQuery && loadingLoginQuery) console.log('loading ...');
 
   if (errorLoginQuery) console.log(`Error: ${errorLoginQuery}`);
 
@@ -106,7 +106,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={formik.handleChange}
-                  {...formik.getFieldProps("email")}
+                  {...formik.getFieldProps('email')}
                 />
                 <div className="alert-danger">
                   {formik.errors.email &&
@@ -124,7 +124,7 @@ const Login = () => {
                   required
                   value={password} // to make reset
                   onChange={formik.handleChange}
-                  {...formik.getFieldProps("password")}
+                  {...formik.getFieldProps('password')}
                 />
                 <div className="alert-danger">
                   {formik.errors.password &&
@@ -141,8 +141,7 @@ const Login = () => {
                 </div>
                 <div className="more-options">
                   <p className="psw">
-                    Did you forget your <Link to="#">password?</Link>{" "}
-                    {/* /forgot */}
+                    Did you forget your <Link to="/forgot">password?</Link>
                   </p>
                 </div>
                 {error && <div className="alert-danger">{error}</div>}
@@ -162,7 +161,7 @@ export default Login;
 
 const initialValue = () => {
   return {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 };

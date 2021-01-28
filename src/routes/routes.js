@@ -1,86 +1,110 @@
-import { lazy } from "react"
-import roles from "../utils/roles"
+import { lazy } from 'react';
+import roles from '../utils/roles';
 
 // layouts
-import LayoutAdmin from "../Layouts/LayoutAdmin/LayoutAdmin"
-import LayoutPublic from "../Layouts/LayoutPublic/LayoutPublic"
+import LayoutAdmin from '../Layouts/LayoutAdmin/LayoutAdmin';
+import LayoutPublic from '../Layouts/LayoutPublic/LayoutPublic';
 // Pages
 
-const Home = lazy(() => import("../pages/public/Home"))
-const Contact = lazy(() => import("../pages/public/Contact"))
-const Login = lazy(() => import("../pages/public/Login"))
-const Register = lazy(() => import("../pages/public/Register"))
-const Dashboard = lazy(() => import("../pages/admin/Dashboard"))
-const Users = lazy(() => import("../pages/admin/Users"))
-const Genres = lazy(() => import("../pages/admin/Genres"))
-const Tags = lazy(() => import("../pages/admin/Tags"))
-const NoFoundPage = lazy(() => import("../pages/NoFoundPage"))
+const Home = lazy(() => import('../pages/public/Home'));
+const Contact = lazy(() => import('../pages/public/Contact'));
+const Login = lazy(() => import('../pages/public/Login'));
+const Register = lazy(() => import('../pages/public/Register'));
+const Active = lazy(() => import('../pages/public/Active'));
+const Forgot = lazy(() => import('../pages/public/Forgot'));
+const ChangePassword = lazy(() => import('../pages/public/ChangePassword'));
+const Dashboard = lazy(() => import('../pages/admin/Dashboard'));
+const Users = lazy(() => import('../pages/admin/Users'));
+const Genres = lazy(() => import('../pages/admin/Genres'));
+const Tags = lazy(() => import('../pages/admin/Tags'));
+const NoFoundPage = lazy(() => import('../pages/NoFoundPage'));
 
-const { ADMIN, CLIENT, VIEWER } = roles
+const { ADMIN, CLIENT, VIEWER } = roles;
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     component: Home,
     layout: LayoutPublic,
     allowedRoles: [ADMIN, CLIENT, VIEWER],
     exact: true,
   },
   {
-    path: "/contact",
+    path: '/contact',
     component: Contact,
     layout: LayoutPublic,
     allowedRoles: [ADMIN, CLIENT, VIEWER],
     exact: true,
   },
   {
-    path: "/login",
+    path: '/login',
     component: Login,
     layout: LayoutPublic,
     allowedRoles: [ADMIN, CLIENT, VIEWER],
     exact: true,
   },
   {
-    path: "/register",
+    path: '/register',
     component: Register,
     layout: LayoutPublic,
     allowedRoles: [ADMIN, CLIENT, VIEWER],
     exact: true,
   },
   {
-    path: "/admin",
+    path: '/active/:token',
+    component: Active,
+    layout: LayoutPublic,
+    allowedRoles: [VIEWER],
+    exact: false,
+  },
+  {
+    path: '/forgot',
+    component: Forgot,
+    layout: LayoutPublic,
+    allowedRoles: [VIEWER],
+    exact: false,
+  },
+  {
+    path: '/reset/:token',
+    component: ChangePassword,
+    layout: LayoutPublic,
+    allowedRoles: [VIEWER],
+    exact: false,
+  },
+  {
+    path: '/admin',
     layout: LayoutAdmin,
     component: Dashboard,
     allowedRoles: [ADMIN],
     exact: true,
   },
   {
-    path: "/admin/users",
+    path: '/admin/users',
     layout: LayoutAdmin,
     component: Users,
     allowedRoles: [ADMIN],
     exact: true,
   },
   {
-    path: "/admin/genres",
+    path: '/admin/genres',
     layout: LayoutAdmin,
     component: Genres,
     allowedRoles: [ADMIN],
     exact: true,
   },
   {
-    path: "/admin/tags",
+    path: '/admin/tags',
     layout: LayoutAdmin,
     component: Tags,
     allowedRoles: [ADMIN],
     exact: true,
   },
   {
-    path: "**",
+    path: '**',
     layout: LayoutPublic,
     component: NoFoundPage,
     allowedRoles: [ADMIN, CLIENT, VIEWER],
   },
-]
+];
 
-export default routes
+export default routes;
